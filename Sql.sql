@@ -22,11 +22,6 @@ group by month(transaction_date) WITH ROLLUP;
 
 -- m-o-m increase or descrease in sale
 select month(transaction_date), 
-lag(month(transaction_date)) over (order by month(transaction_date)) 
-from coffee_shop_sales
-group by month(transaction_date);
-
-select month(transaction_date), 
 round((sum(transaction_qty*unit_price))) as total_sales,
 round(((sum(transaction_qty*unit_price) - lag(sum(transaction_qty*unit_price)) over (order by month(transaction_date)))
 / lag(sum(transaction_qty*unit_price)) over (order by month(transaction_date))) * 100) as mom_percent
